@@ -1,3 +1,16 @@
+
+#* PARAMETROS DOS AUTORES A SEREM MANIPULADOS
+# Tamanho do Patch (path_shape): 256 x 256
+# Tamanho da Mascara (mask_shape): 128 x 128
+# Passo da Janela (patch_stride): 32 x 32
+# Quantidade de Preenchimentos Pluralísticos (heatmap_M_inpaint): 10
+# Probabilidade do Dropout Espacial (droprate): 0.5 
+# Tamanho do Lote (batch_size): 55
+# Critério de Parada: interrompido simplesmente quando o erro de reconstrução L1 no conjunto de 
+#                     treino parou de diminuir
+# Número de Parâmetros da Rede (netG)
+
+
 # NOTE: this config file is for both training and testing
 # experiment and data parameters
 dataset_name: # NAME OF YOUR DATASET 
