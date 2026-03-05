@@ -6,7 +6,7 @@ import yaml
 import numpy as np
 from PIL import Image
 import matplotlib.pyplot as plt
-
+import pydicom
 import torch.nn.functional as F
 from lpips import LPIPS
 from itertools import combinations
@@ -27,8 +27,27 @@ def pil_loader(path, img_format='L'):
         return img.convert(img_format)
 
 
+# def default_loader(path, img_format='L'):
+#         return pil_loader(path, img_format)
+
 def default_loader(path, img_format='L'):
-    return pil_loader(path, img_format='L')
+    if path.lower().endswith('.dcm'):
+        # Abre o DICOM
+        dicom = pydicom.dcmread(path)
+        img_array = dicom.pixel_array
+        
+        # Pega a fatia do meio (já que é 3D)
+        fatia_meio = img_array.shape[0] // 2
+        imagem_2d = img_array[fatia_meio]
+        
+        # Converte para PIL Image para ser compatível com as transforms do PyTorch
+        from PIL import Image
+        # Normaliza a imagem para 0-255 se necessário, ou só converte
+        # Dependendo do DICOM, pode precisar de ajuste de contraste, mas o básico é:
+        return Image.fromarray(imagem_2d).convert(img_format)
+    else:
+        # Usa o original para jpg, png, etc.
+        return pil_loader(path, img_format)
 
 def tensor_img_to_npimg(tensor_img):
     """
@@ -472,7 +491,7 @@ def pt_make_color_wheel():
 
 
 def is_image_file(filename):
-    IMG_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif']
+    IMG_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.ppm', '.bmp', '.pgm', '.tif', '.dcm', '.DCM']
     filename_lower = filename.lower()
     return any(filename_lower.endswith(extension) for extension in IMG_EXTENSIONS)
 
@@ -485,7 +504,7 @@ def deprocess(img):
 # get configs
 def get_config(config):
     with open(config, 'r') as stream:
-        return yaml.load(stream)
+        return yaml.load(stream, Loader=yaml.Loader)
 
 
 # Get model list for resume

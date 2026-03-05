@@ -13,25 +13,25 @@
 
 # NOTE: this config file is for both training and testing
 # experiment and data parameters
-dataset_name: # NAME OF YOUR DATASET 
-data_with_subfolder: False
-train_data_path: # PATH TO FOLDER CONTAINING TRAINING IMAGES (normal/non-anomalous images only) 
-test_data_path: # PATH TO FOLDER CONTAINING TESTING IMAGES (normal and/or anomalous)
+dataset_name: Breast-Cancer-Screening-DBT
+data_with_subfolder: True 
+train_data_path: C:/Repositories/picard-anomalydetection/data/train-dataset
+test_data_path: C:/Repositories/picard-anomalydetection/data/test-dataset
 expname: PICARD-train 
 
 # computation parameters
 cuda: True
 gpu_ids: [0]     # set the GPU ids to use, e.g. [0] or [1, 2]
-num_workers: 4
+num_workers: 5
 
 # training parameters
 train:
-  n_critic: 5
-  n_epochs: 10000
-  subset_frac: # 0.01
-  resume: # directory with checkpoints to resume training at; latest iteration automatically detected (leave blank if training from scratch)
-  batch_size: 55
-  snapshot_save_iter: 5000 # save a checkpoint of the model every N iterations
+  n_critic: 1
+  n_epochs: 1
+  subset_frac: 0.01
+  resume: 
+  batch_size: 5
+  snapshot_save_iter: 1 # save a checkpoint of the model every N iterations
   # image and masking parameters
   image_shape: [256, 256, 1]
   mask_shape: [128, 128]
@@ -49,7 +49,7 @@ train:
   beta2: 0.9
   # visualization
   print_iter: 100
-  viz_iter: 10000
+  viz_iter: 10
   viz_max_out: 16
 
 # loss (loss weights)
@@ -68,8 +68,8 @@ test:
   heatmap_metrics: ['MCD_image', 'MCD_feature'] 
     # metrics to use for anomaly scoring.
     # ^ other options: 'MeanCD_image', 'MeanCD_feature', 'MedCD_image', 'MedCD_feature']
-  heatmap_M_inpaint: 10 # M in the paper: number of completions to generate for a given patch
-  parallel_batchsize: 32 # batch size for parallelized completions of different patches.
+  heatmap_M_inpaint: 3 # M in the paper: number of completions to generate for a given patch
+  parallel_batchsize: 2 # batch size for parallelized completions of different patches.
     # ^ We use 32 for a single 24GB GPU, but you may need to reduce this if you have less memory.
   # image and masking parameters
   patch_shape: [256, 256, 1]

@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import shutil
 from datetime import datetime
+import pydicom
+import numpy as np
 
 # logging
 class Logger():
@@ -21,7 +23,7 @@ class Logger():
         now = datetime.now()
         if not os.path.exists(log_dir):
             os.mkdir(log_dir)
-        logfname = 'log_{}.txt'.format(now.strftime("%m-%d-%Y_%H:%M:%S"))
+        logfname = 'log_{}.txt'.format(now.strftime("%m-%d-%Y_%H-%M-%S"))
         self.logfname = os.path.join(log_dir, logfname)
         
         with open(self.logfname, 'w') as fp: # create file
@@ -83,16 +85,39 @@ class Logger():
 
 # utils
 def pil_loader(path, img_format):
-    # load PIL img from file
-    with open(path, 'rb') as f:
-        img = Image.open(f)
-        img.load()
+    if str(path).lower().endswith('.dcm'):
+        # 1. Lê o ficheiro DICOM
+        dicom = pydicom.dcmread(path)
+        img_array = dicom.pixel_array
+        
+        # 2. Se for um volume 3D, extrai a fatia do meio
+        if len(img_array.shape) == 3:
+            fatia_meio = img_array.shape[0] // 2
+            imagem_2d = img_array[fatia_meio]
+        else:
+            imagem_2d = img_array
+            
+        # 3. Normaliza os pixels (de 16-bits para 8-bits)
+        imagem_2d = imagem_2d.astype(np.float32)
+        imagem_2d = imagem_2d - np.min(imagem_2d)
+        if np.max(imagem_2d) > 0:
+            imagem_2d = imagem_2d / np.max(imagem_2d)
+        imagem_2d = (imagem_2d * 255).astype(np.uint8)
+        
+        # 4. Converte para o formato PIL para o código continuar a funcionar
+        img = Image.fromarray(imagem_2d)
         return img.convert(img_format)
+    else:
+        # load PIL img from file (comportamento original)
+        with open(path, 'rb') as f:
+            img = Image.open(f)
+            img.load()
+            return img.convert(img_format)
 
 # get configs
 def get_config(config):
     with open(config, 'r') as stream:
-        return yaml.load(stream)
+        return yaml.load(stream, Loader=yaml.Loader)
     
 # image tensor normalization (model dependent)
 def yuetal18_normalizer(x): 

@@ -29,9 +29,9 @@ def load_multi_inpainter(model_type, checkpoints, hyperparams, device_ids, dropo
         #     raise NotImplementedError 
         # else: # any other dataset (e.g. MVTec benchmark) 
         sys.path.append("inpainter")
-        from model.networks import Generator
-        from inpainterutils.tools import get_config, get_model_list
-        from inpainterutils.dropout import customize_dropout, apply_dropout_on
+        from inpainter.model.networks import Generator
+        from inpainter.inpainterutils.tools import get_config, get_model_list
+        from inpainter.inpainterutils.dropout import customize_dropout, apply_dropout_on
         # switch back to main dir
 
         # load config
@@ -209,8 +209,8 @@ def load_inpainting_feature_extractor(model_type, checkpoints, hyperparams, devi
         # import from dropout method (slightly different model if on DBT data)
         # directory and a few commands will be different for DBT data
         sys.path.append("inpainter")
-        from model.networks import LocalDis
-        from inpainterutils.tools import get_config, get_model_list
+        from inpainter.model.networks import LocalDis
+        from inpainter.inpainterutils.tools import get_config, get_model_list
         # switch back to main dir
 
         # load config

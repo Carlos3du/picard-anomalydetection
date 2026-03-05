@@ -140,7 +140,12 @@ def main():
     ### (3) heatmap generation
     ############################################################
 
-    test_data_fnames = [os.path.join(config["test_data_path"], f) for f in os.listdir(config["test_data_path"])]
+    test_data_fnames = []
+    for root, dirs, files in os.walk(config["test_data_path"]):
+        for f in files:
+            # Garante que só pega arquivos de imagem e ignora outros tipos
+            if f.lower().endswith(('.png', '.dcm', '.jpg', '.jpeg')):
+                test_data_fnames.append(os.path.join(root, f))
 
     with torch.no_grad():
         for test_data in test_data_fnames:
@@ -153,7 +158,7 @@ def main():
             # plot bbox on img
             img = img.cpu()
             print(test_data)
-            show_images(img, custom_figsize=(10, 14))
+            #show_images(img, custom_figsize=(10, 14))
             img = img.cuda()
             
             ignore_mask = None
@@ -186,7 +191,7 @@ def main():
             # plot and save heatmap data and images
             for heatmap_metric in heatmap_metrics:
                 # create dirs
-                savedir = os.path.join('heatmaps', dataset_name, model_type, dt_now.strftime("%m-%d-%Y_%H:%M:%S"))
+                savedir = os.path.join('heatmaps', dataset_name, model_type, dt_now.strftime("%m-%d-%Y_%H-%M-%S"))
                 savedir_maps = os.path.join(savedir, 'data')
                 savedir_plots = os.path.join(savedir, 'plots')
                 for path in [savedir_maps, savedir_plots]:
@@ -195,9 +200,10 @@ def main():
                         
                 # save heatmap data
                 filename = test_data
-                filename = filename.replace('.png', '')
-                filename = filename.split('/')
-                filename = filename[-1]
+                # Extrai apenas o nome do arquivo corretamente no Windows
+                filename = os.path.basename(filename)
+                # Remove as extensões para não ficar com um nome "arquivo.dcm_MCD..."
+                filename = filename.replace('.png', '').replace('.dcm', '')
                 filename += '_{}_{}_{}_{}_{}_{}.pt'.format(heatmap_metric,
                                                     heatmap_M_inpaint, 
                                                     hyperparams['dropout']['p_dropout'],
@@ -228,7 +234,7 @@ def main():
                 filename_img = os.path.join(savedir_plots, filename_img)
                 if save_heatmap_plots:
                     plt.savefig(fname=filename_img, bbox_inches = 'tight')
-                plt.show()
+                plt.close('all')
             
             # log heatmaps on image
             log_hyperparams = [window_stride, window_size, mask_size, 

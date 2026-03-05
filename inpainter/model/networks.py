@@ -13,6 +13,8 @@ from torchvision import transforms
 from inpainterutils.tools import extract_image_patches, flow_to_image, \
     reduce_mean, reduce_sum, default_loader, same_padding
 
+import torchvision.utils as vutils
+
 # CONSTANTS
 dropout_which_types = ['ALL', 'COARSE', 'FINE', 'CUSTOM']
 
