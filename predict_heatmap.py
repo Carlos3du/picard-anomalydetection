@@ -189,32 +189,38 @@ def main():
             print('time to create heatmap = {} sec'.format(tout - tin))
             
             # plot and save heatmap data and images
+            # plot and save heatmap data and images
             for heatmap_metric in heatmap_metrics:
-                # create dirs
-                savedir = os.path.join('heatmaps', dataset_name, model_type, dt_now.strftime("%m-%d-%Y_%H-%M-%S"))
-                savedir_maps = os.path.join(savedir, 'data')
-                savedir_plots = os.path.join(savedir, 'plots')
-                for path in [savedir_maps, savedir_plots]:
-                    if not os.path.exists(path):
-                        os.makedirs(path)
-                        
-                import re # Garanta que import re está no topo do arquivo se quiser, ou pode ficar aqui mesmo
-
-                # Extrai o nome base (ex: rmlo_slice000)
-                nome_base = os.path.basename(test_data).replace('.png', '').replace('.dcm', '')
                 
-                # Procura de forma inteligente o Paciente e o Estudo no caminho da pasta original
+                import re
+                
+                # 1. Captura quem é o paciente atual e o estudo logo no início
                 match_paciente = re.search(r'(DBT-P\d+)', test_data)
                 match_estudo = re.search(r'(DBT-S\d+)', test_data)
                 
                 paciente = match_paciente.group(1) if match_paciente else "SemPaciente"
                 estudo = match_estudo.group(1) if match_estudo else "SemEstudo"
-
-                # Monta o nome perfeito! Ex: DBT-P00114_DBT-S03767_rmlo_slice000_MCD_image...
+                
+                # 2. Cria as pastas base e ADICIONA a pasta do paciente no final!
+                savedir = os.path.join('heatmaps', dataset_name, model_type, dt_now.strftime("%m-%d-%Y_%H-%M-%S"))
+                
+                savedir_maps = os.path.join(savedir, 'data', paciente)
+                savedir_plots = os.path.join(savedir, 'plots', paciente)
+                
+                for path in [savedir_maps, savedir_plots]:
+                    os.makedirs(path, exist_ok=True) # exist_ok=True evita erros se a pasta já existir
+                        
+                # 3. Define o nome do arquivo de forma inteligente (como combinamos antes)
+                nome_base = os.path.basename(test_data).replace('.png', '').replace('.dcm', '')
+                
                 filename = f"{paciente}_{estudo}_{nome_base}_{heatmap_metric}_{heatmap_M_inpaint}_{hyperparams['dropout']['p_dropout']}_{mask_size}_{window_size}_{window_stride}.pt"
+                
+                # 4. Salva o arquivo de dados (.pt) dentro da pasta do paciente
                 filename_map = os.path.join(savedir_maps, filename)
                 if save_heatmap_data:
                     torch.save(heatmaps[heatmap_metric], filename_map)
+
+         
 
                 # plot heatmap
                 fig, ax = plt.subplots(figsize=(10, 14))
