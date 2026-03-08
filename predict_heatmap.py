@@ -198,19 +198,20 @@ def main():
                     if not os.path.exists(path):
                         os.makedirs(path)
                         
-                # save heatmap data
-                filename = test_data
-                # Extrai apenas o nome do arquivo corretamente no Windows
-                filename = os.path.basename(filename)
-                # Remove as extensões para não ficar com um nome "arquivo.dcm_MCD..."
-                filename = filename.replace('.png', '').replace('.dcm', '')
-                filename += '_{}_{}_{}_{}_{}_{}.pt'.format(heatmap_metric,
-                                                    heatmap_M_inpaint, 
-                                                    hyperparams['dropout']['p_dropout'],
-                                                    mask_size,
-                                                    window_size,
-                                                    window_stride,
-                                                )
+                import re # Garanta que import re está no topo do arquivo se quiser, ou pode ficar aqui mesmo
+
+                # Extrai o nome base (ex: rmlo_slice000)
+                nome_base = os.path.basename(test_data).replace('.png', '').replace('.dcm', '')
+                
+                # Procura de forma inteligente o Paciente e o Estudo no caminho da pasta original
+                match_paciente = re.search(r'(DBT-P\d+)', test_data)
+                match_estudo = re.search(r'(DBT-S\d+)', test_data)
+                
+                paciente = match_paciente.group(1) if match_paciente else "SemPaciente"
+                estudo = match_estudo.group(1) if match_estudo else "SemEstudo"
+
+                # Monta o nome perfeito! Ex: DBT-P00114_DBT-S03767_rmlo_slice000_MCD_image...
+                filename = f"{paciente}_{estudo}_{nome_base}_{heatmap_metric}_{heatmap_M_inpaint}_{hyperparams['dropout']['p_dropout']}_{mask_size}_{window_size}_{window_stride}.pt"
                 filename_map = os.path.join(savedir_maps, filename)
                 if save_heatmap_data:
                     torch.save(heatmaps[heatmap_metric], filename_map)
