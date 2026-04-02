@@ -1,0 +1,34 @@
+2026-04-01 20:44:25,381 INFO Arguments: Namespace(config='../configs/default.yaml', seed=None, print_net=False, print_gpu_info=False)
+2026-04-01 20:44:25,381 INFO Random seed: 774
+2026-04-01 20:44:25,389 INFO Configuration: {'dataset_name': 'Breast-Cancer-Screening-DBT', 'data_with_subfolder': True, 'train_data_path': 'C:/Repositories/picard-anomalydetection/data/train-dataset', 'test_data_path': 'C:/Repositories/picard-anomalydetection/data/test-dataset', 'expname': 'PICARD-train', 'cuda': True, 'gpu_ids': [0], 'num_workers': 7, 'train': {'n_critic': 5, 'n_epochs': 10000, 'subset_frac': 0.03, 'resume': None, 'batch_size': 12, 'snapshot_save_iter': 1000, 'image_shape': [256, 256, 1], 'mask_shape': [128, 128], 'mask_batch_same': True, 'max_delta_shape': [32, 32], 'margin': [0, 0], 'discounted_mask': True, 'spatial_discounting_gamma': 0.9, 'random_crop': True, 'mask_type': 'hole', 'mosaic_unit_size': 12, 'lr': 0.0001, 'beta1': 0.5, 'beta2': 0.9, 'print_iter': 100, 'viz_iter': 10000, 'viz_max_out': 16}, 'coarse_l1_alpha': 1.2, 'l1_loss_alpha': 1.2, 'ae_loss_alpha': 1.2, 'global_wgan_loss_alpha': 1.0, 'gan_loss_alpha': 0.001, 'wgan_gp_lambda': 10, 'test': {'droprate': 0.5, 'heatmap_metrics': ['MCD_image', 'MCD_feature'], 'heatmap_M_inpaint': 10, 'parallel_batchsize': 32, 'patch_shape': [256, 256, 1], 'mask_shape': [128, 128], 'patch_stride': 32, 'save_heatmap_data': True, 'save_heatmap_plots': True, 'save_progressive_heatmap': False, 'log_compute_times': False, 'only_check_nonblack_pixels': False}, 'netG': {'input_dim': 1, 'ngf': 16, 'droprate': None, 'dropout_type': '2D', 'dropout_which': 'CUSTOM', 'custom_drop_layers_coarse': ['conv2_downsample', 'conv3', 'conv4_downsample', 'conv5', 'conv6', 'conv7_atrous', 'conv8_atrous', 'conv9_atrous', 'conv10_atrous'], 'custom_drop_layers_fine': ['self.conv2_downsample', 'self.conv3', 'self.conv4_downsample', 'self.conv5', 'self.conv6', 'self.conv7_atrous', 'self.conv8_atrous', 'self.conv9_atrous', 'self.conv10_atrous', 'self.pmconv1', 'self.pmconv2_downsample', 'self.pmconv3', 'self.pmconv4_downsample', 'self.pmconv5', 'self.pmconv6', 'self.pmconv9', 'self.pmconv10', 'self.allconv11', 'self.allconv12', 'self.allconv13', 'self.allconv14', 'self.allconv15', 'self.allconv16']}, 'netD': {'input_dim': 1, 'ndf': 16}}
+2026-04-01 20:44:25,389 INFO Training on dataset: Breast-Cancer-Screening-DBT
+2026-04-01 20:45:27,536 INFO Iter: [100/1489166] l1: 0.088862 ae: 0.856851 wgan_g: -187.309326 wgan_d: -87.036621 wgan_gp: 0.377306 g: 0.947547 d: -83.263565 speed: 2.42 batches/s 		 TOTAL ESTIMATED TRAINING TIME = 7.118260254001949 days
+2026-04-01 20:46:26,947 INFO Iter: [200/1489166] l1: 0.033325 ae: 0.171645 wgan_g: 153.974884 wgan_d: -6.911694 wgan_gp: 0.078553 g: 0.399939 d: -6.126163 speed: 1.68 batches/s 
+2026-04-01 20:47:25,459 INFO Iter: [300/1489166] l1: 0.010382 ae: 0.125041 wgan_g: 42.859028 wgan_d: 0.426442 wgan_gp: 0.168366 g: 0.205366 d: 2.110100 speed: 1.71 batches/s 
+2026-04-01 20:48:01,612 INFO Iter: [400/1489166] l1: 0.024885 ae: 0.120127 wgan_g: 17.998116 wgan_d: -3.240817 wgan_gp: 0.106354 g: 0.192012 d: -2.177275 speed: 2.77 batches/s 
+2026-04-01 20:49:00,382 INFO Iter: [500/1489166] l1: 0.025194 ae: 0.140578 wgan_g: 72.942131 wgan_d: 5.045442 wgan_gp: 0.031614 g: 0.271868 d: 5.361585 speed: 1.70 batches/s 
+2026-04-01 20:49:59,393 INFO Iter: [600/1489166] l1: 0.015503 ae: 0.110258 wgan_g: 75.363556 wgan_d: -0.055007 wgan_gp: 0.023893 g: 0.226277 d: 0.183926 speed: 1.69 batches/s 
+2026-04-01 20:50:35,590 INFO Iter: [700/1489166] l1: 0.022967 ae: 0.114000 wgan_g: 62.883144 wgan_d: -0.275206 wgan_gp: 0.051861 g: 0.227244 d: 0.243406 speed: 2.76 batches/s 
+2026-04-01 20:51:35,323 INFO Iter: [800/1489166] l1: 0.024438 ae: 0.127652 wgan_g: 119.483414 wgan_d: 2.648395 wgan_gp: 0.006942 g: 0.301992 d: 2.717810 speed: 1.67 batches/s 
+2026-04-01 20:52:33,850 INFO Iter: [900/1489166] l1: 0.022170 ae: 0.096038 wgan_g: 64.831337 wgan_d: -1.333376 wgan_gp: 0.060988 g: 0.206681 d: -0.723496 speed: 1.71 batches/s 
+2026-04-01 20:53:10,200 INFO Iter: [1000/1489166] l1: 0.016984 ae: 0.113191 wgan_g: 67.419930 wgan_d: -5.503020 wgan_gp: 0.075374 g: 0.223630 d: -4.749276 speed: 2.75 batches/s 
+2026-04-01 20:54:08,733 INFO Iter: [1100/1489166] l1: 0.027827 ae: 0.103549 wgan_g: 55.541439 wgan_d: 1.305722 wgan_gp: 0.034908 g: 0.213193 d: 1.654803 speed: 1.71 batches/s 
+2026-04-01 20:55:07,426 INFO Iter: [1200/1489166] l1: 0.019127 ae: 0.111953 wgan_g: 73.022903 wgan_d: -3.216256 wgan_gp: 0.008489 g: 0.230319 d: -3.131371 speed: 1.70 batches/s 
+2026-04-01 20:55:43,903 INFO Iter: [1300/1489166] l1: 0.036633 ae: 0.141025 wgan_g: 41.799313 wgan_d: -3.310432 wgan_gp: 0.022070 g: 0.254990 d: -3.089734 speed: 2.74 batches/s 
+2026-04-01 20:56:42,641 INFO Iter: [1400/1489166] l1: 0.028043 ae: 0.100242 wgan_g: 10.324104 wgan_d: -11.997193 wgan_gp: 0.126841 g: 0.164265 d: -10.728780 speed: 1.70 batches/s 
+2026-04-01 20:57:41,572 INFO Iter: [1500/1489166] l1: 0.018644 ae: 0.102162 wgan_g: 19.924849 wgan_d: -1.381883 wgan_gp: 0.020485 g: 0.164892 d: -1.177031 speed: 1.70 batches/s 
+2026-04-01 20:58:17,613 INFO Iter: [1600/1489166] l1: 0.024549 ae: 0.079657 wgan_g: 58.672329 wgan_d: -1.207856 wgan_gp: 0.023691 g: 0.183719 d: -0.970949 speed: 2.77 batches/s 
+2026-04-01 20:59:16,266 INFO Iter: [1700/1489166] l1: 0.017218 ae: 0.096972 wgan_g: 26.033047 wgan_d: -3.174240 wgan_gp: 0.024676 g: 0.163061 d: -2.927481 speed: 1.71 batches/s 
+2026-04-01 21:00:14,950 INFO Iter: [1800/1489166] l1: 0.021695 ae: 0.073326 wgan_g: 26.797997 wgan_d: -0.807818 wgan_gp: 0.047471 g: 0.140823 d: -0.333108 speed: 1.70 batches/s 
+2026-04-01 21:00:51,182 INFO Iter: [1900/1489166] l1: 0.025622 ae: 0.110406 wgan_g: 26.823280 wgan_d: 1.557963 wgan_gp: 0.020476 g: 0.190057 d: 1.762727 speed: 2.76 batches/s 
+2026-04-01 21:01:49,651 INFO Iter: [2000/1489166] l1: 0.036110 ae: 0.128964 wgan_g: 68.087448 wgan_d: -6.744202 wgan_gp: 0.079596 g: 0.266176 d: -5.948243 speed: 1.71 batches/s 
+2026-04-01 21:02:48,500 INFO Iter: [2100/1489166] l1: 0.018149 ae: 0.082417 wgan_g: 35.643826 wgan_d: -1.279656 wgan_gp: 0.018008 g: 0.156323 d: -1.099574 speed: 1.70 batches/s 
+2026-04-01 21:03:24,581 INFO Iter: [2200/1489166] l1: 0.025418 ae: 0.104632 wgan_g: 8.355013 wgan_d: 0.399843 wgan_gp: 0.019702 g: 0.164415 d: 0.596862 speed: 2.77 batches/s 
+2026-04-01 21:04:23,356 INFO Iter: [2300/1489166] l1: 0.033370 ae: 0.075870 wgan_g: -5.094900 wgan_d: -2.225560 wgan_gp: 0.074836 g: 0.125993 d: -1.477201 speed: 1.70 batches/s 
+
+Params changed from config:
+    subset_frac: 0.03
+    num_workers: 7
+    ngf: 16
+    ndf: 16
+    batch_size: 12

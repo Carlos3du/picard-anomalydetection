@@ -3,6 +3,7 @@ manifest-1617905855234
 .env
 test-dataset
 train-dataset
-checkpoints
 test_logs
 heatmaps
+__pycache__
+debug.png
