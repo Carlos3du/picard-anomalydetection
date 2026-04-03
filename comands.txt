@@ -1,7 +1,0 @@
-
-TRAIN THE MODEL:
-py train.py --config ../configs/default.yaml     
-
-START PREDICTION:
-py predict_heatmap.py --config configs/default.yaml --checkpoint_iter 3  --checkpoint_dir C:\Repositories\picard-anomalydetection\inpainter\checkpoints\Breast-Cancer-Screening-DBT\hole_PICARD-train
-

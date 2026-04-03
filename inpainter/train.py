@@ -111,6 +111,10 @@ def main():
        # reporter = MemReporter(trainer)
         estimate_total_train_time = True
 
+        l1_loss = float('inf')
+        patience = 1000  # Quantidade de iterações do gerador toleradas sem melhoria no L1
+        patience_counter = 0
+
         for iteration in range(start_iteration, niter + 1):
             try:
                 ground_truth = next(iterable_train_loader)
@@ -149,6 +153,23 @@ def main():
                               + losses['wgan_g'] * config['gan_loss_alpha']
                 losses['g'].backward()
                 trainer_module.optimizer_g.step()
+                
+                # Early stopping based on L1 loss
+                current_l1 = losses['l1'].item() 
+                
+                if current_l1 < l1_loss:
+                    l1_loss = current_l1
+                    patience_counter = 0 
+                else:
+                    patience_counter += 1
+                
+                if patience_counter >= patience:
+                    message = f"Early Stopping ativado! Erro L1 não melhorou nas ultimas {patience} iterações."
+                    print(message)
+                    logger.info(message)
+                    trainer_module.save_model(checkpoint_path, iteration)
+                    break
+           
             trainer_module.optimizer_d.step()
 
             # Log and visualization

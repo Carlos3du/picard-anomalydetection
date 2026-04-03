@@ -1,0 +1,89 @@
+Relatório testes de limite de máquina
+
+1. Teste com 0.01 do dataset de validação, mesmos parâmetros do autor
+
+ERRO:
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 220.00 MiB. GPU 0 has a total capacity of 7.96 GiB of which 0 bytes is free. 
+Of the allocated memory 14.15 GiB is allocated by PyTorch, and 249.79 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+
+2. Teste com 0.01 do dataset de validação, diminuição de 55 -> 32 do batchsize
+Justificativa: falta de hardware
+ERRO:
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 512.00 MiB. GPU 0 has a total capacity of 7.96 GiB of which 0 bytes is free. 
+Of the allocated memory 13.68 GiB is allocated by PyTorch, and 662.22 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\
+
+
+3. Teste com 0.01 do dataset de validação, diminuição de 32 -> 24 do batchsize
+Justificativa: falta de hardware
+ERRO:
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 192.00 MiB. GPU 0 has a total capacity of 7.96 GiB of which 0 bytes is free. 
+Of the allocated memory 14.25 GiB is allocated by PyTorch, and 240.64 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+
+4. Teste com 0.01 do dataset de validação, diminuição de 24 -> 16 do batchsize
+Justificativa: falta de hardware
+RODOU
+DATASET SIZE: 595
+TOTAL ITERATION COUNT: 371875 (how many times the model is trained on some image)
+2026-04-02 17:56:19,298 INFO Iter: [100/371875] l1: 0.051987 ae: 0.441746 wgan_g: 2.094069 wgan_d: -53.424904 wgan_gp: 1.742862 g: 0.594573 d: -35.996284 speed: 0.10 batches/s                  
+TOTAL ESTIMATED TRAINING TIME = 44.63786605185036 days
+
+
+TESTAR RESULTADOS PARA 1 DIA
+
+5. Teste com 0.005 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito alto
+DATASET SIZE: 297
+TOTAL ITERATION COUNT: 185625 (how many times the model is trained on some image)
+2026-04-02 18:19:33,427 INFO Iter: [100/185625] l1: 0.037759 ae: 0.295981 wgan_g: 7.561150 wgan_d: -8.337510 wgan_gp: 0.789406 g: 0.408048 d: -0.443445 speed: 0.09 batches/s            
+TOTAL ESTIMATED TRAINING TIME = 23.420511098578572 days
+
+
+6. Teste com 0.001 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito alto
+DATASET SIZE: 59
+TOTAL ITERATION COUNT: 36875 (how many times the model is trained on some image)
+2026-04-02 18:48:02,348 INFO Iter: [100/36875] l1: 0.043191 ae: 0.274222 wgan_g: 6.192555 wgan_d: 1.134926 wgan_gp: 1.348619 g: 0.387088 d: 14.621116 speed: 0.07 batches/s              
+TOTAL ESTIMATED TRAINING TIME = 6.490904279191185 days
+Traceback (most recent call last):
+
+
+7. Teste com 0.0001 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito alto
+DATASET SIZE: 5
+TOTAL ITERATION COUNT: 3125 (how many times the model is trained on some image)
+2026-04-02 19:00:16,300 INFO Iter: [100/3125] l1: 0.074946 ae: 0.697179 wgan_g: -122.317802 wgan_d: -99.296616 wgan_gp: 2.033583 g: 0.804233 d: -78.960785 speed: 0.17 batches/s                 
+TOTAL ESTIMATED TRAINING TIME = 0.21240810441129185 days
+
+
+8. Teste com 0.0005 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito alto
+DATASET SIZE: 29
+TOTAL ITERATION COUNT: 18125 (how many times the model is trained on some image)
+2026-04-02 19:40:35,104 INFO Iter: [100/18125] l1: 0.067537 ae: 0.272202 wgan_g: 67.857628 wgan_d: -5.508577 wgan_gp: 0.518806 g: 0.475545 d: -0.320518 speed: 0.05 batches/s            
+TOTAL ESTIMATED TRAINING TIME = 3.8412144349681006 days
+
+
+8. Teste com 0.00005 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito baixo
+DATASET SIZE: 2
+TOTAL ITERATION COUNT: 1250 (how many times the model is trained on some image)
+2026-04-02 19:55:36,117 INFO Iter: [100/1250] l1: 0.039347 ae: 0.194157 wgan_g: -7.510745 wgan_d: 3.589187 wgan_gp: 0.887271 g: 0.272695 d: 12.461901 speed: 0.18 batches/s              
+TOTAL ESTIMATED TRAINING TIME = 0.08187227440928971 days
+
+
+9. Teste com 0.00015 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito baixo
+DATASET SIZE: 8
+TOTAL ITERATION COUNT: 5000 (how many times the model is trained on some image)
+2026-04-02 20:16:29,206 INFO Iter: [100/5000] l1: 0.036543 ae: 0.290561 wgan_g: 15.876963 wgan_d: 1.063846 wgan_gp: 0.366119 g: 0.408402 d: 4.725036 speed: 0.16 batches/s               
+TOTAL ESTIMATED TRAINING TIME = 0.35280367262937407 days
+
+10. Teste com 0.00035 do dataset de validação, tamanho 16 do batchsize
+Justificativa: tempo muito baixo
+DATASET SIZE: 20
+TOTAL ITERATION COUNT: 12500 (how many times the model is trained on some image)
+2026-04-02 20:31:01,181 INFO Iter: [100/12500] l1: 0.077360 ae: 0.364185 wgan_g: 8.345103 wgan_d: 0.770742 wgan_gp: 1.007801 g: 0.538199 d: 10.848747 speed: 0.25 batches/s              
+TOTAL ESTIMATED TRAINING TIME = 0.577722169044945 days
+
