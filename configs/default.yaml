@@ -37,7 +37,7 @@ train:
   n_critic: 5
   n_epochs: 10000
   subset_frac: 0.00035
-  resume: # directory with checkpoints to resume training at; latest iteration automatically detected (leave blank if training from scratch)
+  resume: C:\Repositories\picard-anomalydetection\inpainter\checkpoints\Breast-Cancer-Screening-DBT\hole_PICARD-train
   batch_size: 16 
   snapshot_save_iter: 1000 # save a checkpoint of the model every N iterations
   # image and masking parameters

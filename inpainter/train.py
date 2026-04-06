@@ -112,7 +112,7 @@ def main():
         estimate_total_train_time = True
 
         l1_loss = float('inf')
-        patience = 1000  # Quantidade de iterações do gerador toleradas sem melhoria no L1
+        patience = 3000  # Quantidade de iterações do gerador toleradas sem melhoria no L1
         patience_counter = 0
 
         for iteration in range(start_iteration, niter + 1):
